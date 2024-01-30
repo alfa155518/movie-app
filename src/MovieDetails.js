@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import StarRating from "./StartRating";
 export default function MovieDetails({
   selectedId,
@@ -13,6 +13,12 @@ export default function MovieDetails({
   const [userRating, setUserRating] = useState();
 
   let isWatched = watched.map((movie) => movie.imdbID).includes(selectedId);
+
+  let timeRating = useRef(0);
+
+  useEffect(() => {
+    if (userRating) timeRating.current++;
+  }, [userRating]);
 
   // Items Of Movie Details
   const {
@@ -46,8 +52,15 @@ export default function MovieDetails({
 
   // Function Add Movie To List Of Watched
   function handelAddWatched(movie) {
-    setWatched([...watched, { ...movie, userRating: userRating }]);
+    setWatched([
+      ...watched,
+      { ...movie, userRating: userRating, timeRating: timeRating.current },
+    ]);
   }
+
+  useEffect(() => {
+    localStorage.setItem("watched", JSON.stringify(watched));
+  }, [watched]);
 
   useEffect(() => {
     if (!selectedMovie.Title) return;

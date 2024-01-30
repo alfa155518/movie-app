@@ -23,7 +23,6 @@ export default function StarRating({
   function onRate(i) {
     setRating(i + 1);
     setUserRating(Math.floor(tempRating));
-    console.log(4);
   }
 
   // Generate Stars

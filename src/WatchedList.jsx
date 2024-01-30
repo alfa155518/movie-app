@@ -6,6 +6,7 @@ export default function WatchedList({ watched, setWatched }) {
       .filter((movie) => movie.imdbID !== targetMovie.imdbID);
     setWatched(restMovies);
   }
+
   return (
     <ul className="list">
       {watched.map((movie) => (
